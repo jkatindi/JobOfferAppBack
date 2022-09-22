@@ -1,0 +1,93 @@
+package com.kat.os.query.service;
+
+import com.kat.os.commonDTO.DegreeDTO;
+import com.kat.os.commonDTO.TechnologyDTO;
+import com.kat.os.commonDTO.WorkOfferTDO;
+import com.kat.os.mappers.DegreeMapper;
+import com.kat.os.mappers.OfferMapper;
+import com.kat.os.mappers.TechSkillMapper;
+import com.kat.os.query.repository.DegreeRepository;
+import com.kat.os.query.repository.TechSkillRepository;
+import com.kat.os.query.repository.WorkOfferRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
+import java.util.List;
+@Service
+@Transactional
+public class WorkOfferServiceImpl  implements WorkOfferService{
+
+    @Autowired
+    private WorkOfferRepository workOfferRepository;
+    @Autowired
+    private OfferMapper offerMapper;
+    @Autowired
+    private DegreeMapper degreeMapper;
+    @Autowired
+    private TechSkillMapper techSkillMapper;
+    @Autowired
+    private DegreeRepository degreeRepository;
+    @Autowired
+    private TechSkillRepository techSkillRepository;
+
+    @Override
+    public List<WorkOfferTDO> getAllWorkOffers()
+    {
+        return offerMapper.toTDO(workOfferRepository.findAll());
+    }
+
+    @Override
+    public WorkOfferTDO getOneWorkOffer(String id) {
+        return this.offerMapper.toTDO(this.workOfferRepository.getById(id));
+    }
+
+
+    @Override
+    public WorkOfferTDO addOfferWork(WorkOfferTDO offerTDO) {
+       return this.offerMapper.toTDO(
+               this.workOfferRepository.save(this.offerMapper.toEntity(offerTDO))
+       );
+
+
+    }
+
+    @Override
+    public void updateOneOfferWork(String id, WorkOfferTDO workOffer) {
+        workOffer.setId(id);
+        this.workOfferRepository.save(this.offerMapper.toEntity(workOffer));
+    }
+
+
+    @Override
+    public DegreeDTO addOneDegree(DegreeDTO degree) {
+        return null;
+    }
+
+    @Override
+    public List<DegreeDTO> getAllDegrees() {
+        return this.degreeMapper.toTDO(this.degreeRepository.findAll());
+    }
+
+    @Override
+    public DegreeDTO getOneDegree(Long id) {
+        return this.degreeMapper.toTDO(this.degreeRepository.getById(id));
+    }
+
+
+    @Override
+    public TechnologyDTO addOneTechnology(TechnologyDTO tech) {
+        return null;
+    }
+
+    @Override
+    public List<TechnologyDTO> getTechnologies() {
+        return this.techSkillMapper.toTDO(this.techSkillRepository.findAll());
+    }
+
+    @Override
+    public TechnologyDTO getOneTechnology(Long id) {
+        return this.techSkillMapper.toTDO(this.techSkillRepository.getById(id));
+    }
+}
