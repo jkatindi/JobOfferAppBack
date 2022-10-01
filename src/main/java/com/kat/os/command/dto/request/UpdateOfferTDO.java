@@ -7,7 +7,13 @@ import com.kat.os.commonDTO.TechnologyDTO;
 import java.util.List;
 
 public class UpdateOfferTDO {
+    private String id;
     private String title;
+
+    public String getId() {
+        return id;
+    }
+
     private InfoGeneralDTO generalInfo;
     private String  positionHeld;
     private String  generalProfile;

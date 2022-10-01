@@ -54,8 +54,7 @@ public class WorkOfferServiceImpl  implements WorkOfferService{
     }
 
     @Override
-    public void updateOneOfferWork(String id, WorkOfferTDO workOffer) {
-        workOffer.setId(id);
+    public void updateOneOfferWork(WorkOfferTDO workOffer) {
         this.workOfferRepository.save(this.offerMapper.toEntity(workOffer));
     }
 

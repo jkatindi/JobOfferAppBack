@@ -31,12 +31,7 @@ public class OfferCommandController {
     @PutMapping("/updateOffer")
     public CompletableFuture<String>  updateOffer(@RequestBody UpdateOfferTDO offerTDO)
     {
-        return  this.updateOffer(offerTDO);
-    }
-
-    public CompletableFuture<String> addTechnology(@RequestBody CreateTechDTO technologyDTO)
-    {
-          return null;
+        return  this.commandService.updateOffer(offerTDO);
     }
 
     @ExceptionHandler

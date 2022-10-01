@@ -25,6 +25,7 @@ public class OfferAggregate {
     private List<DegreeDTO>  requiredDegrees;
     private int requiredExperience;
     private int availablePlace;
+    public  OfferAggregate(){}
 
     @CommandHandler
     public OfferAggregate(CreateOfferCommand offerCommand) {
@@ -40,20 +41,18 @@ public class OfferAggregate {
                 offerCommand.getAvailablePlace()
         ));
     }
-
     @EventSourcingHandler
     public  void on(OfferCreatedEvent  createdEvent){
-       this.id=createdEvent.getId();
-       this.title=createdEvent.getTitle();
-       this.generalInfo=createdEvent.getGeneralInfo();
-       this.positionHeld=createdEvent.getPositionHeld();
-       this.generalProfile=createdEvent.getGeneralProfile();
-       this.requiredTechs=createdEvent.getRequiredTechs();
-       this.requiredDegrees=createdEvent.getRequiredDegrees();
-       this.requiredExperience=createdEvent.getExperMin();
-       this.availablePlace=createdEvent.getAvailablePlace();
+        this.id=createdEvent.getId();
+        this.title=createdEvent.getTitle();
+        this.generalInfo=createdEvent.getGeneralInfo();
+        this.positionHeld=createdEvent.getPositionHeld();
+        this.generalProfile=createdEvent.getGeneralProfile();
+        this.requiredTechs=createdEvent.getRequiredTechs();
+        this.requiredDegrees=createdEvent.getRequiredDegrees();
+        this.requiredExperience=createdEvent.getExperMin();
+        this.availablePlace=createdEvent.getAvailablePlace();
     }
-
     @CommandHandler
     public void on(UpdateOfferCommand offerCommand) {
         AggregateLifecycle.apply(new OfferUpdatedEvent(
@@ -68,6 +67,7 @@ public class OfferAggregate {
                 offerCommand.getAvailablePlace()
         ));
     }
+
     @EventSourcingHandler
     public  void on(OfferUpdatedEvent  updatedEventvent){
         this.id=updatedEventvent.getId();

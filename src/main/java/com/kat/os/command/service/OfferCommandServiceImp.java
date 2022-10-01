@@ -1,6 +1,7 @@
 package com.kat.os.command.service;
 
 import com.kat.os.command.command.CreateOfferCommand;
+import com.kat.os.command.command.UpdateOfferCommand;
 import com.kat.os.command.dto.request.CreateOfferJobTDO;
 import com.kat.os.command.dto.request.CreateTechDTO;
 import com.kat.os.command.dto.request.UpdateOfferTDO;
@@ -33,7 +34,17 @@ public class OfferCommandServiceImp  implements OfferCommandService{
 
     @Override
     public CompletableFuture<String> updateOffer(UpdateOfferTDO updateOfferTDO) {
-        return null;
+        return this.commandGateway.send(new UpdateOfferCommand(
+                updateOfferTDO.getId(),
+                updateOfferTDO.getTitle(),
+                updateOfferTDO.getGeneralInfo(),
+                updateOfferTDO.getPositionHeld(),
+                updateOfferTDO.getGeneralProfile(),
+                updateOfferTDO.getRequiredTechs(),
+                updateOfferTDO.getRequiredDegrees(),
+                updateOfferTDO.getExperMin(),
+                updateOfferTDO.getAvailablePlace()
+        ));
     }
 
     @Override

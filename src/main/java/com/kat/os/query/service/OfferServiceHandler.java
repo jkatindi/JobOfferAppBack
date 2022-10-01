@@ -5,6 +5,7 @@ import com.kat.os.commonDTO.TechnologyDTO;
 import com.kat.os.commonDTO.WorkOfferTDO;
 import com.kat.os.event.BaseEvent;
 import com.kat.os.event.OfferCreatedEvent;
+import com.kat.os.event.OfferUpdatedEvent;
 import com.kat.os.mappers.OfferMapper;
 import com.kat.os.query.repository.WorkOfferRepository;
 import com.kat.os.query.tdo.*;
@@ -30,6 +31,8 @@ public class OfferServiceHandler {
         this.workOfferRepository = workOfferRepository;
         this.offerMapper = offerMapper;
         this.offerService = offerService;
+
+
     }
 
 
@@ -45,9 +48,23 @@ public class OfferServiceHandler {
         offerTDO.setRequiredTechs(event.getRequiredTechs());
         offerTDO.setGeneralProfile(event.getGeneralProfile());
         offerTDO.setExperMin(event.getExperMin());
-        offerTDO.setGeneralProfile(event.getGeneralProfile());
         this.offerService.addOfferWork(offerTDO);
-        kafkaTemplate.send("topic-offer",offerTDO);
+        //kafkaTemplate.send("topic-offer",offerTDO);
+    }
+
+    @EventHandler
+    public void on(OfferUpdatedEvent event){
+        WorkOfferTDO offer=this.offerService.getOneWorkOffer(event.getId());
+        System.out.println("back ENd  Test "+offer.getId());
+        offer.setTitle(event.getTitle());
+        offer.setGeneralInfo(event.getGeneralInfo());
+        offer.setPositionHeld(event.getPositionHeld());
+        offer.setAvailablePlace(event.getAvailablePlace());
+        offer.setRequiredTechs(event.getRequiredTechs());
+        offer.setRequiredDegrees(event.getRequiredDegrees());
+        offer.setGeneralProfile(event.getGeneralProfile());
+        offer.setExperMin(event.getExperMin());
+        this.offerService.updateOneOfferWork(offer);
     }
 
     @QueryHandler

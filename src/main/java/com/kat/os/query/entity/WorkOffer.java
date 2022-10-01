@@ -16,6 +16,7 @@ public class WorkOffer implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="fk_Info")
     private InfoGeneral generalInfo;
+    @Column(columnDefinition = "TEXT",length = 65535)
     private String  positionHeld;
     @Column(columnDefinition = "TEXT",length = 65535)
     private String  generalProfile;

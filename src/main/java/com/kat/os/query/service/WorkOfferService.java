@@ -10,7 +10,7 @@ public interface WorkOfferService {
     List<WorkOfferTDO> getAllWorkOffers();
     WorkOfferTDO getOneWorkOffer(String id);
     WorkOfferTDO addOfferWork(WorkOfferTDO offerTDO);
-    void updateOneOfferWork(String id,WorkOfferTDO workOffer);
+    void updateOneOfferWork(WorkOfferTDO workOffer);
     DegreeDTO addOneDegree(DegreeDTO degree);
     List<DegreeDTO> getAllDegrees();
     DegreeDTO getOneDegree(Long id);
