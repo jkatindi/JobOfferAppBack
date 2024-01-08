@@ -13,6 +13,7 @@ import com.kat.os.query.service.WorkOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 
 @SpringBootApplication
+@AutoConfigureOrder
 public class OfferServiceApplication  implements CommandLineRunner {
     @Autowired
 	private DegreeRepository degreeRepository;
@@ -63,14 +65,6 @@ public class OfferServiceApplication  implements CommandLineRunner {
 		offer.setRequiredTechs(techSkills); offer.setRequiredDegrees(degrees);
 		offer.setId(UUID.randomUUID().toString());
 		this.repositoryOffer.save(offer);  */
-
-
-
-
-
-
-
-
 
 	}
 }

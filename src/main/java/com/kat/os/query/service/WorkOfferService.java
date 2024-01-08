@@ -10,6 +10,7 @@ public interface WorkOfferService {
     List<WorkOfferTDO> getAllWorkOffers();
     WorkOfferTDO getOneWorkOffer(String id);
     WorkOfferTDO addOfferWork(WorkOfferTDO offerTDO);
+    List<WorkOfferTDO> findByKeyWord(String  keyWord);
     void updateOneOfferWork(WorkOfferTDO workOffer);
     DegreeDTO addOneDegree(DegreeDTO degree);
     List<DegreeDTO> getAllDegrees();

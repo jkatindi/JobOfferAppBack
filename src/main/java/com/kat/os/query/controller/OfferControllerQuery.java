@@ -7,6 +7,8 @@ import com.kat.os.query.service.WorkOfferService;
 import com.kat.os.query.tdo.*;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +17,9 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/query")
 public class OfferControllerQuery {
-    private final QueryGateway gateway;
 
+    private final QueryGateway gateway;
+    
 
     public OfferControllerQuery(QueryGateway gateway, WorkOfferService offerService) {
         this.gateway = gateway;
@@ -28,11 +31,19 @@ public class OfferControllerQuery {
                 ResponseTypes.multipleInstancesOf(WorkOfferTDO.class)).join();
     }
 
+    @GetMapping("/all/offers/{keyWord}")
+    public  List<WorkOfferTDO> getOfferByKeyWord(@PathVariable  String keyWord) {
+
+        return  this.gateway.query(new GetQueryKeyWordOffer(keyWord.toLowerCase()),
+                ResponseTypes.multipleInstancesOf(WorkOfferTDO.class)).join();
+    }
+
     @GetMapping("/offers/all/{id}")
     public WorkOfferTDO getOneOfferID(@PathVariable String id){
         return this.gateway.query(
                 new GetQueryIdOfferDTO(id),ResponseTypes.instanceOf(WorkOfferTDO.class)).join();
     }
+
     @GetMapping("/technologies/all")
     public List<TechnologyDTO> getAllTechSkills(){
         return this.gateway.query(new GetAllQueryTechDTO(),
@@ -57,7 +68,10 @@ public class OfferControllerQuery {
                         ResponseTypes.instanceOf(DegreeDTO.class)).join();
     }
 
+    @ExceptionHandler
+    public ResponseEntity<String> exceptionHandler(Exception exception){
+        return  new ResponseEntity<String>(exception.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
 
-
-
+    }
 }

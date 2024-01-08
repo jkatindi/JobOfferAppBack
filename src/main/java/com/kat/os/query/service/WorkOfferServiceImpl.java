@@ -54,6 +54,11 @@ public class WorkOfferServiceImpl  implements WorkOfferService{
     }
 
     @Override
+    public List<WorkOfferTDO> findByKeyWord(String keyWord) {
+        return this.offerMapper.toTDO(this.workOfferRepository.findOfferKeyWord(keyWord));
+    }
+
+    @Override
     public void updateOneOfferWork(WorkOfferTDO workOffer) {
         this.workOfferRepository.save(this.offerMapper.toEntity(workOffer));
     }

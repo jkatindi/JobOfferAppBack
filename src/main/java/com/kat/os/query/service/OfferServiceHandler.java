@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class OfferServiceHandler {
 
-  private WorkOfferRepository workOfferRepository;
+    private WorkOfferRepository workOfferRepository;
     private final  OfferMapper offerMapper;
     private  final WorkOfferService  offerService;
 
@@ -49,7 +49,7 @@ public class OfferServiceHandler {
         offerTDO.setGeneralProfile(event.getGeneralProfile());
         offerTDO.setExperMin(event.getExperMin());
         this.offerService.addOfferWork(offerTDO);
-        //kafkaTemplate.send("topic-offer",offerTDO);
+        kafkaTemplate.send("offer-topic",offerTDO);
     }
 
     @EventHandler
@@ -70,6 +70,11 @@ public class OfferServiceHandler {
     @QueryHandler
     public List<WorkOfferTDO>  on(GetAllQueryOfferDTO getAllQueryOfferDTO){
         return  offerService.getAllWorkOffers();
+    }
+
+    @QueryHandler
+    public  List<WorkOfferTDO> on(GetQueryKeyWordOffer getQueryKeyWordOffer){
+        return  offerService.findByKeyWord(getQueryKeyWordOffer.getId());
     }
 
     @QueryHandler
@@ -95,5 +100,6 @@ public class OfferServiceHandler {
     public DegreeDTO on(GetQueryIdDegreeDTO getQueryIdDegreeDTO){
         return  this.offerService.getOneDegree(getQueryIdDegreeDTO.getId());
     }
+
 
 }
