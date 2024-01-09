@@ -2,9 +2,9 @@ package com.kat.os.query.entity;
 
 import  com.kat.os.query.entity.WorkOffer;
 import org.hibernate.annotations.Type;
-import org.hibernate.type.TextType;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
