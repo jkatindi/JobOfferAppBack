@@ -1,0 +1,42 @@
+import { Component } from '@angular/core';
+import {AuthenticationService} from "../services/authentication.service";
+import {Route, Router} from "@angular/router";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {jwtDecode} from "jwt-decode";
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent {
+  roles : any;
+  username: any;
+  formLogin!: FormGroup;
+  jwtdecode!: any;
+  constructor(private fb: FormBuilder,protected  authService: AuthenticationService,private router: Router) { }
+
+  ngOnInit(): void {
+    this.formLogin=this.fb.group({
+      username : this.fb.control(""),
+      password : this.fb.control("")
+    })
+  }
+
+  handleConnexion() {
+    let username=this.formLogin.value.username
+    let password=this.formLogin.value.password
+
+    this.authService.login(username,password)
+      .subscribe({
+        next: data => {
+          this.authService.loadProfile(data);
+          this.router.navigateByUrl("")
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
+
+  }
+}
