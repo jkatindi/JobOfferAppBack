@@ -1,1 +1,62 @@
-<p>new-offer works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>add</mat-icon>
+       add  new offer
+    </mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+
+  <mat-card-content class="form-size">
+     <mat-horizontal-stepper   [linear]="isLinear"  >
+         <mat-step [stepControl]="titleForm">
+           <form [formGroup]="titleForm">
+             <ng-template matStepLabel>Job description</ng-template>
+             <mat-divider></mat-divider>
+             <mat-form-field  appearance="outline">
+               <mat-label>Title Job</mat-label>
+               <input  matInput formControlName="title">
+             </mat-form-field>
+             <mat-form-field class="myTextArea">
+               <textarea matInput placeholder="Position  held" formControlName="positionHeld"></textarea>
+             </mat-form-field>
+             <mat-form-field class="fields">
+               <mat-label>Available places</mat-label>
+               <mat-select formControlName="availablePlace" type="number">
+                 @for (i of selectItem;track i){
+                  <mat-option value="{{i}}">{{i}}</mat-option>
+                 }
+               </mat-select>
+               <input  matInput placeholder="AvailablePlace" formControlName="availablePlace" required>
+             </mat-form-field>
+             <div class="container">
+               <button class="btn btn-warning" mat-raised-button matStepperPrevious>Previous </button>
+               <button  class="btn btn-success" mat-button matStepperNext style="width:50px"><mat-icon>forward</mat-icon> </button>
+             </div>
+           </form>
+         </mat-step>
+         <mat-step [stepControl]="companyForm">
+           <ng-template matStepLabel>About  the  company</ng-template>
+           <mat-divider></mat-divider>
+
+           <form [formGroup]="companyForm">
+             <mat-form-field appearance="outline">
+               <input matInput placeholder="localisation" formControlName="localisation">
+             </mat-form-field>
+             <mat-form-field  appearance="outline">
+               <input matInput placeholder="companyName" formControlName="companyName" required>
+             </mat-form-field>
+             <mat-form-field class="myTextArea" appearance="outline">
+               <mat-label>company Description</mat-label>
+               <textarea matInput  formControlName="companyDescription"></textarea>
+             </mat-form-field>
+             <div class="container">
+               <button class="btn btn-warning" mat-raised-button matStepperPrevious>Previous </button>
+               <button class="btn btn-success" mat-button matStepperNext>----- <mat-icon>forward</mat-icon></button>
+             </div>
+           </form>
+         </mat-step>
+     </mat-horizontal-stepper>
+  </mat-card-content>
+
+</mat-card>

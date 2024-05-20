@@ -25,11 +25,16 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {RequestInterceptorService} from "./services/request-interceptor.service";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTable, MatTableModule} from "@angular/material/table";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import { LogoutComponent } from './logout/logout.component';
+import { WelcomComponent } from './welcom/welcom.component';
+import {MatStepper, MatStepperModule} from "@angular/material/stepper";
+import {MAT_CHIPS_DEFAULT_OPTIONS, MatChipsModule} from "@angular/material/chips";
+import {COMMA,ENTER} from "@angular/cdk/keycodes";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -42,7 +47,8 @@ import { LogoutComponent } from './logout/logout.component';
     DetailsOfferComponent,
     NewOfferComponent,
     UpdateOfferComponent,
-    LogoutComponent
+    LogoutComponent,
+    WelcomComponent
   ],
   imports: [
     BrowserModule,
@@ -65,10 +71,16 @@ import { LogoutComponent } from './logout/logout.component';
     MatInput,
     ReactiveFormsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatStepper, FormsModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatStepperModule, MatSelect, MatOption
   ],
   providers: [OfferService,
-    {provide: HTTP_INTERCEPTORS,useClass: RequestInterceptorService,multi:true }
+    {provide: HTTP_INTERCEPTORS,useClass: RequestInterceptorService,multi:true },
+    {provide: MAT_CHIPS_DEFAULT_OPTIONS, useValue: { separatorKeyCodes:[ENTER,COMMA]  }
+    }
   ],
   bootstrap: [AppComponent]
 })

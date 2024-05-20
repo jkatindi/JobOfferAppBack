@@ -4,6 +4,8 @@ import {OfferService} from "../services/offer.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {JobOffer} from "../models/jobOffer";
+import {AuthenticationService} from "../services/authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-offers',
@@ -14,11 +16,13 @@ export class OffersComponent implements AfterViewInit{
   public  dataSource!: MatTableDataSource<JobOffer>;
   displayedColumns: string[] = ['id','title', 'availablePlace', 'experMin'];
   @ViewChild('matPaginator') paginator! : MatPaginator;
-  constructor(private  serviceOffer: OfferService,private  cdr: ChangeDetectorRef) {
+  constructor(private  serviceOffer: OfferService,private  cdr: ChangeDetectorRef,
+              private auth:AuthenticationService,private router: Router) {
   }
 
 
   ngOnInit(): void {
+
        this.serviceOffer.getAllJobOffers().subscribe(
          {
            next:(data)=>{
@@ -37,7 +41,8 @@ export class OffersComponent implements AfterViewInit{
   }
 
 
-  applyFilter($event: KeyboardEvent) {
-
+  applyFilter(event: Event) {
+   let value: string=(event.target as HTMLInputElement).value;
+   this.dataSource.filter=value;
   }
 }

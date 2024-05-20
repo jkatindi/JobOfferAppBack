@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {Route, Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
@@ -14,7 +14,9 @@ export class LoginComponent {
   username: any;
   formLogin!: FormGroup;
   jwtdecode!: any;
-  constructor(private fb: FormBuilder,protected  authService: AuthenticationService,private router: Router) { }
+  error!: any;
+  constructor(private fb: FormBuilder,protected  authService: AuthenticationService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.formLogin=this.fb.group({
@@ -31,10 +33,10 @@ export class LoginComponent {
       .subscribe({
         next: data => {
           this.authService.loadProfile(data);
-          this.router.navigateByUrl("")
+          this.router.navigateByUrl("/admin")
         },
         error: err => {
-          console.log(err)
+          this.error="Wrong  login  or  password";
         }
       })
 

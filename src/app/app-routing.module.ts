@@ -9,18 +9,22 @@ import {NewOfferComponent} from "./new-offer/new-offer.component";
 import {UpdateOfferComponent} from "./update-offer/update-offer.component";
 import {OffersComponent} from "./offers/offers.component";
 import {LogoutComponent} from "./logout/logout.component";
+import {adminGuard} from "./guards/admin.guard";
 
 const routes: Routes = [
-  {path:"home",component: HomeComponent},
-  {path:"dashboard",component: DashboardComponent},
   {path:"login",component: LoginComponent},
-  {path:"admin",component: AdminTempleteComponent},
-  {path:"detail-offer/:id",component: DetailsOfferComponent},
-  {path:"update-offer",component: UpdateOfferComponent},
-  {path:"new-offer",component: NewOfferComponent},
-  {path:"offers",component:OffersComponent},
-  {path:"logout",component: LogoutComponent},
-  {path:"",redirectTo:"/home",pathMatch:"full"}
+  {path:"",redirectTo:"/login",pathMatch:"full"},
+  {path:"admin",component: AdminTempleteComponent,canActivate :[adminGuard],children : [
+      {path:"detail-offer/:id",component: DetailsOfferComponent},
+      {path:"update-offer",component: UpdateOfferComponent},
+      {path:"new-offer",component: NewOfferComponent},
+      {path:"offers",component:OffersComponent},
+      {path:"logout",component: LogoutComponent},
+      {path:"home",component: HomeComponent},
+      {path:"dashboard",component: DashboardComponent}
+    ]}
+
+
 ];
 
 @NgModule({

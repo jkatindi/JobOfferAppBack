@@ -15,6 +15,6 @@ export class LogoutComponent {
     this.auth.username=undefined;
     this.auth.scope=undefined;
     this.auth.accessToken=undefined;
-    this.router.navigateByUrl("/home")
+    this.router.navigateByUrl("/login")
   }
 }

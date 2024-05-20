@@ -10,7 +10,7 @@
       Job Offers</button>
     <mat-menu  #offerActions>
       <button  mat-menu-item>Check-list</button>
-      <button  mat-menu-item>Cerate new  Offer </button>
+      <button  mat-menu-item routerLink="/admin/new-offer">Cerate new  Offer </button>
     </mat-menu>
     <button  mat-button *ngIf="this.auth.isAuthenticated==true" [matMenuTriggerFor]="desconnect">
       <mat-icon  iconPositionEnd>arrow_drop_down</mat-icon>
@@ -19,7 +19,7 @@
       Login
     </button>
     <mat-menu #desconnect>
-      <button mat-menu-item routerLink="/logout">logout</button>
+      <button mat-menu-item routerLink="/admin/logout"><mat-icon>input</mat-icon>logout</button>
     </mat-menu>
   </mat-toolbar>
   <mat-drawer-container>
@@ -27,18 +27,19 @@
     <mat-drawer #drawer mode="side" position="start" opened="true">
       <mat-nav-list>
         <mat-icon>home</mat-icon>
-        <button mat-button routerLink="/home">Home</button>
+        <button mat-button routerLink="/admin/home">Home</button>
       </mat-nav-list>
       <mat-nav-list>
         <mat-icon>dashboard</mat-icon>
-        <button mat-button routerLink="/dashboard">DashBoard</button>
+        <button mat-button routerLink="/admin/dashboard">DashBoard</button>
       </mat-nav-list>
       <mat-nav-list>
         <mat-icon>list</mat-icon>
-        <button mat-button routerLink="/offers">Offers</button>
+        <button mat-button routerLink="/admin/offers">Offers</button>
       </mat-nav-list>
       <mat-nav-list>
-        <button mat-button routerLink="/news">Important  News</button>
+        <mat-icon>list</mat-icon>
+        <button mat-button routerLink="/admin/news">Important  News</button>
       </mat-nav-list>
     </mat-drawer>
 
