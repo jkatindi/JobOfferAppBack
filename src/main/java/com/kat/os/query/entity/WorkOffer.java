@@ -1,5 +1,6 @@
 package com.kat.os.query.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kat.os.commonDTO.InfoGeneralDTO;
 
 import jakarta.persistence.*;
@@ -21,10 +22,12 @@ public class WorkOffer implements Serializable {
     @Column(columnDefinition = "TEXT",length = 65535)
     private String  generalProfile;
 
+    @JsonManagedReference
     @ManyToMany(targetEntity =TechSkill.class,
             cascade = CascadeType.ALL)
     private List<TechSkill> requiredTechs=new ArrayList<>();
 
+    @JsonManagedReference
     @ManyToMany(targetEntity =Degree.class,
             cascade = CascadeType.ALL)
     private List<Degree> requiredDegrees=new ArrayList<>();

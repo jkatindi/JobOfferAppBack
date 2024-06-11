@@ -1,5 +1,6 @@
 package com.kat.os.query.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class TechSkill implements Serializable {
     private Long id;
     private String technology;
 
+    @JsonBackReference
     @ManyToMany(targetEntity =WorkOffer.class ,mappedBy = "requiredTechs",
             cascade =CascadeType.ALL )
     private List<WorkOffer> workOffers=new ArrayList<>();

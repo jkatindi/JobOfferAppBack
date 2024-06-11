@@ -18,7 +18,7 @@ public class OfferCommandServiceImp  implements OfferCommandService{
     @Autowired
     private CommandGateway commandGateway;
     @Override
-    public CompletableFuture<WorkOfferTDO> createOffer(CreateOfferJobTDO offerJobTDO) {
+    public CompletableFuture<String> createOffer(CreateOfferJobTDO offerJobTDO) {
         return commandGateway.send(new CreateOfferCommand(
                 UUID.randomUUID().toString(),
                 offerJobTDO.getTitle(),

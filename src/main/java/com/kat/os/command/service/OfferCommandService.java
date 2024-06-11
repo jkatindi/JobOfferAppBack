@@ -9,7 +9,7 @@ import com.kat.os.commonDTO.WorkOfferTDO;
 import java.util.concurrent.CompletableFuture;
 
 public interface OfferCommandService {
-    CompletableFuture<WorkOfferTDO> createOffer(CreateOfferJobTDO createOfferJobTDO);
+    CompletableFuture<String> createOffer(CreateOfferJobTDO createOfferJobTDO);
     CompletableFuture<String> updateOffer(UpdateOfferTDO updateOfferTDO);
     CompletableFuture<TechnologyDTO> createTechnology(CreateTechDTO techDTO); 
 

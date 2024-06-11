@@ -55,7 +55,6 @@ public class OfferServiceHandler {
     @EventHandler
     public void on(OfferUpdatedEvent event){
         WorkOfferTDO offer=this.offerService.getOneWorkOffer(event.getId());
-        System.out.println("back ENd  Test "+offer.getId());
         offer.setTitle(event.getTitle());
         offer.setGeneralInfo(event.getGeneralInfo());
         offer.setPositionHeld(event.getPositionHeld());

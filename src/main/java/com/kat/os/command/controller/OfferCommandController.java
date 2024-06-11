@@ -8,14 +8,16 @@ import com.kat.os.commonDTO.WorkOfferTDO;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.util.concurrent.CompletableFuture;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/command/offers")
 public class OfferCommandController {
     private final OfferCommandService commandService;
@@ -25,20 +27,37 @@ public class OfferCommandController {
     }
 
     @PostMapping("/addOffer")
-    public CompletableFuture<WorkOfferTDO> addOffer(@RequestBody CreateOfferJobTDO offerJobTDO){
-        return this.commandService.createOffer(offerJobTDO);
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public ResponseEntity<CompletableFuture<String>> addOffer(@RequestBody CreateOfferJobTDO offerJobTDO){
+        return  ResponseEntity
+                .ok()
+                .header("status-code","Success  added on server  side")
+                .body(this.commandService.createOffer(offerJobTDO));
+
+
     }
+    
+
     @PutMapping("/updateOffer")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public CompletableFuture<String>  updateOffer(@RequestBody UpdateOfferTDO offerTDO)
     {
         return  this.commandService.updateOffer(offerTDO);
     }
 
-    @ExceptionHandler
+    /*@ExceptionHandler
     public ResponseEntity<String> exceptionHandler(Exception exception){
         return  new ResponseEntity<String>(exception.getMessage(),
                 HttpStatus.INTERNAL_SERVER_ERROR);
 
+    }*/
+
+    @ExceptionHandler
+    public ResponseEntity<String>  exceptionStatus(Exception exception){
+        return ResponseEntity
+                .badRequest()
+                .header("status-code",exception.getMessage())
+                .body(exception.getMessage());
     }
 
 }

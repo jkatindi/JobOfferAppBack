@@ -1,5 +1,6 @@
 package com.kat.os.query.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Degree implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String degreeName;
-
+    @JsonBackReference
     @ManyToMany(targetEntity = WorkOffer.class,
             mappedBy = "requiredDegrees",cascade = CascadeType.ALL)
     private List<WorkOffer> workOffers=new ArrayList<>();
