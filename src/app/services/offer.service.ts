@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AuthenticationService} from "./authentication.service";
 import {Observable} from "rxjs";
-import {JobOffer} from "../models/jobOffer";
+import {JobOffer, TechSkillOffer} from "../models/jobOffer";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -43,8 +43,8 @@ export class OfferService {
 
   }
 
-  getAllTechnologies(): Observable<any>{
-    return  this.http.get<Array<any>>(this.hostQuery+"/technologies/all");
+  getAllTechnologies(): Observable<TechSkillOffer[]>{
+    return  this.http.get<Array<TechSkillOffer>>(this.hostQuery+"/technologies/all");
   }
 
   getOneDegree(id:number): Observable<any>{

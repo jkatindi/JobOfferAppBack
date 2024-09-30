@@ -2,14 +2,14 @@
   <mat-card-header>
     <mat-card-title>
       <mat-icon>add</mat-icon>
-       add  new offer
+       add  new offer   {{responseServer}}
     </mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
 
   <mat-card-content class="form-size">
-     <mat-horizontal-stepper   [linear]="isLinear"  >
-         <mat-step [stepControl]="titleForm">
+     <mat-horizontal-stepper   [linear]="isLinear"  #stepper>
+         <mat-step [stepControl]="titleForm" errorMessage="errorMessage">
            <form [formGroup]="titleForm">
              <ng-template matStepLabel>Job description</ng-template>
              <mat-divider></mat-divider>
@@ -27,24 +27,21 @@
                   <mat-option value="{{i}}">{{i}}</mat-option>
                  }
                </mat-select>
-               <input  matInput placeholder="AvailablePlace" formControlName="availablePlace" required>
              </mat-form-field>
              <div class="container">
-               <button class="btn btn-warning" mat-raised-button matStepperPrevious>Previous </button>
                <button  class="btn btn-success" mat-button matStepperNext style="width:50px"><mat-icon>forward</mat-icon> </button>
              </div>
            </form>
          </mat-step>
-         <mat-step [stepControl]="companyForm">
+         <mat-step [stepControl]="companyForm"  errorMessage="errorMessage">
+           <form [formGroup]="companyForm">
            <ng-template matStepLabel>About  the  company</ng-template>
            <mat-divider></mat-divider>
-
-           <form [formGroup]="companyForm">
              <mat-form-field appearance="outline">
                <input matInput placeholder="localisation" formControlName="localisation">
              </mat-form-field>
-             <mat-form-field  appearance="outline">
-               <input matInput placeholder="companyName" formControlName="companyName" required>
+             <mat-form-field appearance="outline">
+               <input matInput placeholder="companyName" formControlName="companyName">
              </mat-form-field>
              <mat-form-field class="myTextArea" appearance="outline">
                <mat-label>company Description</mat-label>
@@ -55,6 +52,54 @@
                <button class="btn btn-success" mat-button matStepperNext>----- <mat-icon>forward</mat-icon></button>
              </div>
            </form>
+         </mat-step>
+         <mat-step [stepControl]="techsForm"  errorMessage="errorMessage">
+            <ng-template  matStepLabel>Profil  candidate</ng-template>
+            <mat-divider></mat-divider>
+            <form [formGroup]="techsForm">
+              <mat-form-field  appearance="outline">
+                  <mat-select  formControlName="requiredDegrees" placeholder="select degrees" *ngIf="this.degrees$ | async  as degrees " multiple="true">
+                       <mat-option *ngFor="let deg of degrees" [value]="deg">{{deg.degreeName}}</mat-option>
+                  </mat-select>
+              </mat-form-field><br>
+
+              <mat-form-field class="mat-mdc-chip-selected chipsSize">
+                <mat-chip-grid #myChip formControlName="requiredTechs">
+                    <mat-chip #c="matChip"  *ngFor="let tech of techSkills"
+                                [value]="tech"  [removable]="removable"  (removed)="remove(tech)">
+                      {{tech.technology}}
+                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input  #techInput matInput placeholder="Choose tech..."
+
+                        [matAutocomplete]="auto" [matChipInputFor]="myChip"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                </mat-chip-grid>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                  <mat-option *ngFor="let tech of filteredTechs$ | async" [value]="tech">
+                    {{tech.technology}}
+                  </mat-option>
+                </mat-autocomplete>
+
+              </mat-form-field>
+              <mat-form-field class="myTextArea">
+                <textarea matInput placeholder="Profile  du  candidat" formControlName="generalProfil"></textarea>
+              </mat-form-field>
+              <mat-form-field class="fields">
+                <mat-label>Required experience</mat-label>
+                <mat-select formControlName="experMin" type="number">
+                  @for (i of selectItem;track i){
+                    <mat-option value="{{i}}">{{i}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <div class="container">
+                <button class="btn btn-warning" mat-raised-button matStepperPrevious>Previous </button>
+                <button  class="btn btn-success" mat-button (click)="addNewOffer()"
+                         style="width:150px"><mat-icon>done_outline</mat-icon></button>
+              </div>
+            </form>
          </mat-step>
      </mat-horizontal-stepper>
   </mat-card-content>

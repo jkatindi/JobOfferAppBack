@@ -15,6 +15,8 @@ export class AdminTempleteComponent implements OnInit{
   }
 
   ngOnInit():void  {
+    if(!this.auth.isAuthenticated)
+      this.router.navigateByUrl("/login")
   }
 
 }
